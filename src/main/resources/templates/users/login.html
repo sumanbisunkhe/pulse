@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulse - Login</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f3f3f3;
+        }
+
+        .logo {
+            font-family: 'Lucida Handwriting', cursive;
+            font-weight: bold;
+            font-size: 48px;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .logo:hover {
+            transform: scale(1.07);
+        }
+
+        .login-container {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            font-size: 24px;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 0.5rem 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #000fbb, #3700ff);
+            border: none;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background: linear-gradient(135deg, #000bff, #000fbb);
+            transform: translateY(-2px);
+        }
+
+        .forgot-password {
+            margin: 1rem 0;
+            font-size: 14px;
+            color: rgb(0, 11, 255);
+            cursor: pointer;
+        }
+        .forgot-password:hover{
+            text-decoration: underline;
+
+        }
+
+        .signup {
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .signup a {
+            color: #000bff;
+            text-decoration: none;
+        }
+
+        .signup a:hover {
+            text-decoration: underline;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            font-family: "impact",serif;
+            color: red;
+            font-size: 14px;
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            font-family: "impact",serif;
+            color: #00a237;
+            font-size: 14px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="logo">Pulse</div>
+
+    <!-- Success Message -->
+    <div th:if="${successMessage != null}" class="success-message" id="success-message">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <!-- Error Message -->
+    <div th:if="${errorMessage != null}" class="error-message" id="error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+
+    <form th:action="@{/auth/login}" method="post">
+        <input type="text" placeholder="Username , email address or phone number" name="identifier" required>
+        <input type="password" placeholder="Password" name="password" required>
+        <button type="submit">Log in</button>
+    </form>
+
+    <div class="forgot-password">Forgotten your password?</div>
+    <div class="signup">
+        Don't have an account? <a th:href="@{/auth/create}">Sign up</a>
+    </div>
+</div>
+
+<!-- JavaScript to hide the error message after a set time -->
+<script>
+    window.addEventListener('load', function() {
+        const errorMessage = document.getElementById('error-message');
+        const successMessage = document.getElementById('success-message');
+
+        if (errorMessage) {
+            setTimeout(function() {
+                errorMessage.style.display = 'none';
+            }, 3000); // Hide error after 3 seconds
+        }
+
+        if (successMessage) {
+            setTimeout(function() {
+                successMessage.style.display = 'none';
+            }, 3000); // Hide success message after 3 seconds
+        }
+    });
+
+</script>
+</body>
+</html>

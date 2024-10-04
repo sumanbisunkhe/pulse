@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Information</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Logo */
+        .logo {
+            font-family: 'Lucida Handwriting', cursive;
+            font-weight: bold;
+            font-size: 28px;
+            color: black;
+            text-decoration: none;
+        }
+        .logo:hover {
+            transform: scale(1.07);
+            cursor: pointer;
+        }
+
+        /* Profile Placeholder (Enlarged Circle) */
+        .profile-placeholder {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-left: 10px;
+            margin-right: 40px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-placeholder:hover {
+            transform: scale(1.1);
+            z-index: 1;
+        }
+
+        .profile-frame {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-picture {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transform: scale(1.1);
+        }
+
+        .admin-icon {
+            position: absolute; /* Position it relative to the profile frame */
+            bottom:42px;       /* Position at the bottom of the profile picture */
+            left:99%;         /* Center horizontally */
+            transform: translateX(-50%); /* Adjust for center alignment */
+            font-size: 20px;   /* Adjust size for a smaller icon */
+            background: #000000;
+            -webkit-background-clip: text; /* Clip the background to the text */
+            color: transparent; /* Make the text color transparent */
+            padding: 2px;      /* Optional: padding for a better look */
+            border-radius: 50%; /* Optional: round the icon's background */
+            z-index: 2;
+        }
+
+
+
+        /* Navigation Bar Icons */
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-icons i {
+            font-size: 24px;
+            cursor: pointer;
+            color: #000000;
+            background: #ffffff;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-icons i:hover {
+            color: royalblue;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+
+        /* Sidebar */
+        .sidebar {
+            position: absolute;
+            top: 70px;
+            right: 10px;
+            width: 160px; /* Further reduced width */
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 12px; /* Reduced padding */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            display: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .sidebar.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sidebar.hide {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+            padding: 6px;
+            border-radius: 6px;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .sidebar ul li i {
+            font-size: 18px;
+            margin-right: 8px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+            display: block;
+            width: 100%;
+            font-size: 11px;
+        }
+
+        .sidebar ul li a:hover {
+            color: inherit;
+        }
+
+        .sidebar ul li i.material-icons {
+            color: inherit;
+        }
+
+        /* User details container */
+        .user-details {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            margin: 80px auto;
+            padding: 30px;
+        }
+
+        /* Profile section */
+        .profile1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-frame1 {
+            width: 160px; /* Frame size */
+            height: 160px; /* Frame size */
+            border-radius: 50%; /* Circular frame */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto; /* Centering the frame */
+            overflow: hidden; /* Hides any excess image parts */
+            background-color: #f5f5f5; /* Optional: Background color for the frame */
+        }
+
+        .profile-picture1 {
+            width: 160px; /* Fixed size */
+            height: 160px; /* Fixed size */
+            border-radius: 50%; /* Ensures it's a circle */
+            object-fit: cover; /* Ensures the image covers the area */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        }
+        .admin-icon {
+            position: absolute; /* Position it relative to the profile frame */
+            bottom:42px;       /* Position at the bottom of the profile picture */
+            left:99%;         /* Center horizontally */
+            transform: translateX(-50%); /* Adjust for center alignment */
+            font-size: 20px;   /* Adjust size for a smaller icon */
+            background: #000000;
+            -webkit-background-clip: text; /* Clip the background to the text */
+            color: transparent; /* Make the text color transparent */
+            padding: 2px;      /* Optional: padding for a better look */
+            border-radius: 50%; /* Optional: round the icon's background */
+            z-index: 2;
+        }
+
+
+        /* Heading */
+        h1 {
+            font-family: "Bradley Hand ITC", serif;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #444444;
+        }
+
+        /* User info table */
+        .user-info {
+            margin: 0 auto;
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd; /* Added border */
+            border-radius: 8px; /* Rounded corners */
+            overflow: hidden; /* For rounded corners effect */
+        }
+
+        .user-info th, .user-info td {
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .user-info th {
+            width: 30%;
+            background-color: #f5f5f5; /* Header background color */
+            color: black; /* Header text color */
+            border-bottom: 2px solid #ddd; /* Thicker bottom border */
+        }
+
+        .user-info tr:nth-child(odd) {
+            background-color: #f9f9f9; /* Light gray for even rows */
+        }
+
+        .user-info tr:hover {
+            background-color: #f5f5f5; /* Hover effect */
+        }
+
+        .user-info td {
+            color: #262626;
+            word-wrap: break-word;
+        }
+
+        /* Footer button */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer a {
+            text-decoration: none;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #000fbb, #3700ff);
+            color: white;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer a:hover {
+            background: linear-gradient(135deg, #000bff, #000fbb);
+            transform: translateY(-2px);
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Top Navigation Bar -->
+<div class="top-nav">
+    <!-- Logo -->
+    <a class="logo" th:href="@{/admin/dashboard}" >Pulse</a>
+
+    <!-- Navigation Icons -->
+    <div class="nav-icons">
+        <a th:href="@{/admin/dashboard}" style="text-decoration: none; color: inherit;">
+            <i class="material-icons">home</i>
+        </a>
+        <a th:href="@{/admin/list}" style="text-decoration: none; color: inherit;">
+            <i class="material-icons">info</i>
+        </a>
+        <i class="material-icons">message</i>
+        <i class="material-icons">people</i>
+        <i class="material-icons">more_vert</i>
+    </div>
+
+    <!-- Profile Placeholder and Sidebar Trigger -->
+    <div style="display: flex; align-items: center;">
+        <div class="profile-placeholder" id="profileIcon">
+            <div class="profile-frame">
+                <!-- Profile Picture -->
+                <img th:if="${user.profilePictureUrl != null}"
+                     th:src="@{${user.profilePictureUrl}}"  class="profile-picture"  alt=""/>
+
+
+                <img th:if="${user.profilePicture == null}"
+                     src="/templates/images/unnamed.jpg"
+                     class="profile-picture" alt=""/>
+
+                <!-- Admin Icon -->
+                <i  class="material-icons admin-icon">admin_panel_settings</i>
+            </div>
+
+        </div>
+
+        <!-- Sidebar -->
+        <div id="profileSidebar" class="sidebar">
+            <ul>
+                <li>
+                    <i class="material-icons">visibility</i>
+                    <a th:href="@{/admin/profile-picture/{id}(id=${user.id})}">View Profile Picture</a>
+                </li>
+                <li>
+                    <i class="material-icons">account_circle</i>
+                    <a th:href="@{/admin/id/{id}(id=${user.id})}">Profile Information</a>
+                </li>
+
+                <li>
+                    <i class="material-icons">edit</i>
+                    <a th:href="@{/admin/edit/{id}(id=${user.id})}">Edit Profile</a>
+                </li>
+                <li>
+                    <i class="material-icons">logout</i>
+                    <a href="/auth/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="user-details">
+
+    <!-- Profile section -->
+    <div class="profile1">
+        <div class="profile-frame1">
+            <img th:src="@{${user.profilePictureUrl}}"  class="profile-picture1"  alt=""/>
+        </div>
+    </div>
+
+    <h1>Account Information</h1>
+
+    <!-- User info table -->
+    <table class="user-info">
+        <tr>
+            <th>Username:</th>
+            <td th:text="${user.username}"></td>
+        </tr>
+        <tr>
+            <th>First Name:</th>
+            <td th:text="${user.firstName}"></td>
+        </tr>
+        <tr>
+            <th>Last Name:</th>
+            <td th:text="${user.lastName}"></td>
+        </tr>
+        <tr>
+            <th>Email:</th>
+            <td th:text="${user.email}"></td>
+        </tr>
+        <tr>
+            <th>Phone:</th>
+            <td th:text="${user.phone}"></td>
+        </tr>
+        <tr>
+            <th>Address:</th>
+            <td th:text="${user.address}"></td>
+        </tr>
+        <tr>
+            <th>Gender:</th>
+            <td th:text="${user.gender}"></td>
+        </tr>
+
+        <tr>
+            <th>Created At:</th>
+            <td th:text="${#dates.format(user.createdAt)}"></td>
+        </tr>
+    </table>
+
+</div>
+
+<script>
+    // Toggle sidebar visibility on profile picture click
+    document.getElementById('profileIcon').addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevents the event from bubbling up to the document
+        const sidebar = document.getElementById('profileSidebar');
+        sidebar.classList.toggle('show');
+    });
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', function(event) {
+        const sidebar = document.getElementById('profileSidebar');
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnProfileIcon = document.getElementById('profileIcon').contains(event.target);
+
+        // If the click is outside the sidebar and not on the profile icon, hide the sidebar
+        if (!isClickInsideSidebar && !isClickOnProfileIcon) {
+            sidebar.classList.remove('show');
+        }
+    });
+
+    // Placeholder function for viewing the profile picture
+    function viewProfilePicture() {
+        alert('Viewing profile picture');
+    }
+
+</script>
+
+</body>
+</html>

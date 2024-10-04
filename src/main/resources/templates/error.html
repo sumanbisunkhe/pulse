@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f3f3f3;
+        }
+
+        .logo {
+            font-family: 'Lucida Handwriting', cursive;
+            font-weight: bold;
+            font-size: 48px;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .logo:hover {
+            transform: scale(1.07);
+        }
+        .error-container {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .error-container h1 {
+            font-size: 24px;
+            margin-bottom: 1.5rem;
+        }
+        main {
+            padding: 40px;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ff0004;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+        main p {
+            margin: 0;
+            font-size: 20px;
+            color: #ffffff;
+        }
+        footer {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+        footer a {
+            font-family: "Times New Roman", serif;
+            color: #000bff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <div class="logo">Pulse</div>
+
+    <!-- Error Message -->
+    <main>
+        <p th:text="${errorMessage}">An unexpected error occurred.</p>
+    </main>
+    <footer>
+        <p>Have an account? <a href="/auth/login">Sign In</a></p>
+        <p>Don't have an account? <a href="/auth/create">Sign Up</a></p>
+        <p>Need help? <a href="/contact">Contact Support</a></p>
+    </footer>
+
+</div>
+
+</body>
+</html>
